@@ -79,6 +79,21 @@ test('basic classical inheritence works', function() {
     'base HouseCat is not affected by subclass mutations');
 });
 
+test('inheritance of getters and setters works', function() {
+  cat = Cat();
+  parasite = Parasite();
+  lion = Lion();
+
+  equal(cat.furryness, 20,
+    'getter was inherted from base')
+
+  equal(parasite.furryness, 0,
+    'getters can override base')
+
+  equal(lion.furryness, 40,
+    'getters can use $super to get base getter')
+});
+
 test('instanceof works', function() {
   var lion = Lion();
   ok(lion instanceof Lion,

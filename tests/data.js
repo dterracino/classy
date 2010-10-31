@@ -7,6 +7,7 @@ var Animal = Class.$extend({
     // required defaults
     this.name = (typeof(options.name) == 'string' ? options.name : 'Animal');
     this.health = (typeof(options.health) == 'integer' ? options.health : 100);
+    this._furryness = (typeof(options.furryness) == 'integer' ? options.furryness : 20);
   },
 
   die: function() {
@@ -19,6 +20,14 @@ var Animal = Class.$extend({
 
   dead: function() {
     return (this.health <= 0);
+  },
+
+  get furryness() {
+    return this._furryness;
+  },
+
+  set furryness(val) {
+    this._furryness = val;
   }
 });
 
@@ -26,6 +35,9 @@ var Parasite = Animal.$extend({
   eat: function(animal) {
     this.$super(animal);
     animal.health -= 5;
+  },
+  get furryness() {
+    return 0;
   }
 });
 
@@ -43,5 +55,8 @@ var HouseCat = Cat.$extend({
 
 var Lion = Cat.$extend({
   'cute': false,
-  'scary': true
+  'scary': true,
+  get furryness() {
+    return this.$super() * 2;
+  }
 });
