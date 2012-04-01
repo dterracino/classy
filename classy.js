@@ -1,7 +1,7 @@
 /**
  * Classy - classy classes for JavaScript
  *
- * :copyright: (c) 2011 by Armin Ronacher. 
+ * :copyright: (c) 2011 by Armin Ronacher.
  * :license: BSD.
  */
 !function (definition) {
@@ -86,7 +86,7 @@
             prototype[name] = mixin[name];
         }
       }
- 
+
     /* copy class vars from the superclass */
     properties.__classvars__ = properties.__classvars__ || {};
     if (prototype.__classvars__)
@@ -142,6 +142,8 @@
     rv.constructor = rv;
     rv.$extend = Class.$extend;
     rv.$withData = Class.$withData;
+    if (properties.hasOwnProperty('toString'))
+      rv.toString = properties.toString;
     return rv;
   };
 
