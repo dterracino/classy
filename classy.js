@@ -142,8 +142,8 @@
     rv.constructor = rv;
     rv.$extend = Class.$extend;
     rv.$withData = Class.$withData;
-    if (properties.hasOwnProperty('toString'))
-      rv.toString = properties.toString;
+    if (properties.hasOwnProperty('__repr__'))
+      rv.toString = properties.__str__;
     return rv;
   };
 
