@@ -1,7 +1,7 @@
 /**
  * Classy - classy classes for JavaScript
  *
- * :copyright: (c) 2010 by Armin Ronacher.
+ * :copyright: (c) 2011 by Armin Ronacher.
  * :license: BSD.
  */
 !function (definition) {
@@ -13,7 +13,8 @@
     CLASSY_VERSION = '1.4',
     context = this,
     old = context.Class,
-    disable_constructor = false;
+    disable_constructor = false,
+    object_id = 0;
 
   /* we check if $super is in use by a class if we can.  But first we have to
      check if the JavaScript interpreter supports that.  This also matches
@@ -141,9 +142,13 @@
       if (disable_constructor)
         return;
       var proper_this = context === this ? cheapNew(arguments.callee) : this;
+      proper_this.$objectId = object_id;
+      object_id++;
+      proper_this.$class = rv;
       if (proper_this.__init__)
         proper_this.__init__.apply(proper_this, arguments);
-      proper_this.$class = rv;
+      if (proper_this.__proto__.__repr__)
+        proper_this.toString = proper_this.__proto__.__repr__
       return proper_this;
     }
 
@@ -160,6 +165,8 @@
     rv.constructor = rv;
     rv.$extend = Class.$extend;
     rv.$withData = Class.$withData;
+    if (properties.hasOwnProperty('__repr_class__'))
+      rv.toString = properties.__repr_class__;
     return rv;
   };
 
